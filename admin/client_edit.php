@@ -3,45 +3,20 @@ require __DIR__ .'/config/dbconnection.php';
 require __DIR__.'/functions/function.php';
 session_start();
 if(@$_SESSION['is_login']){
- $email = $_SESSION['email'];
+ $email = @$_SESSION['email'];
 }else{
  // echo "<script> location.href='../index.php'; </script>";
     header("Location:{$base_url}");
 }
 
-//Start client update code here
-if(isset($_POST['update_client'])){
-    $id = anatise($_POST['id']);
-    $name = sanatise($_POST['client_name']);
-    $email = sanatise($_POST['client_email']);
-    $mobile = sanatise($_POST['client_mobile']);
-if($name=="" || $email=="" || $mobile==""){
-  $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Fill All Fields </div>';
-    header("Refresh:2; url={$base_url}/admin/client_registration.php");
-}else{
-$sql = "INSERT INTO users(client_name, client_email, client_mobile) VALUES ('$name', '$email', '$mobile')";
- $result = mysqli_query($conn,$sql);
-
-  
-  if($result){
-    $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Client Updated Successfully </div>';
-  
-    header("Refresh:2; url={$base_url}/admin/dashboard.php");
-  }else{
-      $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update</div>';
-     header("Refresh:2; url={$base_url}/admin/client_edit.php");
-  }
-}
-
- }//End client update code here
-
-
- 
-     $id = $_GET['id'];
-     $sql = "SELECT * FROM users  WHERE id= {$id}";
+     $id = @$_GET['id'];
+     $sql = "SELECT * FROM users  WHERE id = '{$id}'";
      $result=mysqli_query($conn,$sql);
      // $count=mysqli_num_rows($result);
-     if(mysqli_num_rows($result)>0){
+     $count = mysqli_num_rows($result);
+    
+     if($count>0){
+
       while($row=mysqli_fetch_assoc($result)){
 
 ?>
@@ -95,7 +70,7 @@ $sql = "INSERT INTO users(client_name, client_email, client_mobile) VALUES ('$na
                         <div class="col-lg-6 col-sm-12">
                     <!-- Page Heading -->
                     
-                    <form method="POST" id="myform" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <form method="POST" id="myform" action="client_updatedata.php">
 
                         
                         <div class="form-group">
@@ -116,8 +91,13 @@ $sql = "INSERT INTO users(client_name, client_email, client_mobile) VALUES ('$na
                         <button type="submit" class="btn btn-primary mb-2" name="update_client">Update</button>
                       
                       </form>
-                      <?php } } ?>
+
+                      <?php
+                       } 
+                     ?>
+                     
                     </div>
+                    <?php } ?>
                 </div>
 
                 </div>

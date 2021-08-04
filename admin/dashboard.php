@@ -126,7 +126,7 @@ if(@$_SESSION['is_login']){
                 </td>
                  <td>                          
                 <a href='client_edit.php?id=<?php echo $row['id'];?>' value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
-                <a href='delete.php?client_id=<?php echo $row['client_id'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
+                <a href='client_delete.php?id=<?php echo $row['id'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
                 </td>
                                             
                                         </tr> 

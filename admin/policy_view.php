@@ -167,8 +167,8 @@ if(@$_SESSION['is_login']){
                                        
                     
                  <td>                          
-                <!-- <a href='edit.php?client_id=<?php echo $row['client_id'];?>' value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a> -->
-                <a href='delete.php?client_id=<?php echo $row['client_id'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
+                <a href="policy_edit.php?insurance_number=<?php echo $row['insurance_number']?>&category=<?php echo $row['category']?>&product_type=<?php echo $row['product_type'];?>" value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
+                <a href='policy_delete.php?insurance_number=<?php echo $row['insurance_number'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
                 </td>
                                             
                                         </tr> 
