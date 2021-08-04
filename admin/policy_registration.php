@@ -85,9 +85,11 @@ if($result1){
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
 </head>
 
@@ -124,8 +126,25 @@ if($result1){
 
                        <div class="form-group">
                             <label for="exampleFormControlInput1">Client Id</label>
-                            <input type="text" name="client_id" class="form-control" id="exampleFormControlInput1" placeholder="Enter Id" required >
+                            <select type="text" name="client_id" class="form-control" id="clientid" placeholder="Enter Id" required ></select>
                         </div>
+                        <!-- <?php
+                        // $client_id = sanatise($_POST['client_id']);
+                        // $sql2 = "SELECT * FROM users WHERE id = '{$client_id}' ";
+                        // $result2= mysqli_query($conn,$sql2);
+                        // $row2 = mysqli_fetch_assoc($result2);
+                        // $cl_name = $row2['client_name'];
+                        // $cl_email = $row2['client_email'];
+                        // $cl_mobile = $row2['client_mobile'];
+                        // ?>
+                        <script>
+                        function myFunction() {
+                            var cl_name = '<?php echo $cl_name; ?>';
+                            var cl_email = '<?php echo $cl_email; ?>';
+                            var cl_mobile = '<?php echo $cl_mobile; ?>';
+                        alert(cl_name);
+                        }
+                        </script> -->
 
                         <div class="form-group" id="fornext">
                           <label for="exampleFormControlSelect1">Select Category</label>
@@ -322,3 +341,37 @@ $("#myform,#category").change(function(){
     }
 });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+
+$("#clientid").select2({
+     placeholder: "Enter name or email",
+                        allowClear: true,
+                        ajax: {
+                            url: "clients.php",
+                            dataType: 'json',
+                            data: function(params) {
+                                var query = {
+                                    search: params.term,
+                                }
+
+                                return query;
+                            },
+                            processResults: function(data) {
+                                var mydata = $.map(data.data, function (obj) {
+  obj.text = obj.text || obj.name; // replace name with the property used for the text
+
+  return obj;
+});
+                                return {
+                                    results: mydata
+                                };
+                            }
+                        },
+                        minimumInputLength: 1,
+
+                    })
+    </script>

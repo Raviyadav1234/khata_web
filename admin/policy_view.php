@@ -102,7 +102,9 @@ if(@$_SESSION['is_login']){
                                             <th>Product Type</th>
                                             <th>Vehicle Number</th>
                                             <th>Model</th>
-                                            <th>Insurance Period</th>
+                                            <th>Insurance Start On</th>
+                                            <th>Insurance Expire On</th>
+                                            <th>Expiry Status</th>
                                             <th>Payment Mode</th>
                                             <th>Payment Reference Number</th>
                                             <th>EMI1 Date</th>
@@ -121,7 +123,7 @@ if(@$_SESSION['is_login']){
                                 <?php 
                                     
 
-
+                              
                               $due = 0;
                                 while($row=mysqli_fetch_assoc($result1)){
                                      $due_balance = (float)$row['total_amount']-((float)$row['credit_debit_amount'] + (float)$row['credit_debit_amount1'] + (float)$row['credit_debit_amount2']);
@@ -139,12 +141,26 @@ if(@$_SESSION['is_login']){
                                             <td><?php echo $row['product_type'];?></td>
                                             <td><?php echo $row['vehicle_number'];?></td>
                                             <td><?php echo $row['vehicle_model'];?></td>
-                                            <td><?php echo $row['insurance_startdate'];
-                                            echo "<br><br> <b>To</b><br><br>";
-                                            echo  $row['insurance_enddate'];
-
-                                            ?>
-                           
+                                           <td><?php echo $row['insurance_startdate'];?>
+                                            </td>
+                                            <td><?php echo $row['insurance_enddate'];?>
+                                            </td>
+                                            <td>
+                                              <?php
+                                            $today_date = date('Y/m/d');
+                                            $td = strtotime($today_date);
+                                  $exp_date=strtotime($row['insurance_enddate']);
+                                              if($td>$exp_date){
+                                             $diff_days = $td-$exp_date;
+                                $remain_date = abs(floor($diff_days/(60*60*24)));
+                                echo "<b class='text-danger'>Insurance has expired before <span style='color:black;'>{$remain_date}</span> days ago</b>";
+                                              }else{
+                                               $diff_days = $td-$exp_date;
+                                $remain_date = abs(floor($diff_days/(60*60*24)));
+                                                echo "<b class='text-success'>Insurance will expired in <span style='color:black;'>{$remain_date}</span> days</b>";
+                                                
+                                              }
+                                              ?>
                                             </td>
                                             <td><?php echo $row['payment_mode'];?></td>
                                             <td><?php echo $row['payment_reference_number'];?></td>

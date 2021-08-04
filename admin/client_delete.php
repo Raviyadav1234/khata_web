@@ -11,17 +11,25 @@
 
      $client_id = @$_GET['id'];
      $insurance_number = @$_GET['insurance_number'];
-
-     $sql = "DELETE  FROM users WHERE id = '{$client_id}' ; ";
-     $sql .= "DELETE * FROM policy_data WHERE client_id = '{$client_id}'";
-     $result=mysqli_multi_query($conn,$sql);
-      
-    if($result){
-      
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Updated Successfully </div>';
+     $sql = "DELETE FROM policy_data WHERE client_id = '{$client_id}';";
+     
+     $affected_rows = mysqli_query($conn,$sql);
+     if($affected_rows){
+        $sql = "DELETE FROM users WHERE id = '{$client_id}';";
+        $affected_rows=mysqli_query($conn,$sql);
+       // echo $affected_rows;
+       $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Updated Successfully </div>';
   
       header("Refresh:0; url={$base_url}/admin/dashboard.php");
-    }
+     }
+    //echo mysqli_error($conn);
+      
+   //  if($result){
+      
+   //    $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Updated Successfully </div>';
+  
+   //    header("Refresh:0; url={$base_url}/admin/dashboard.php");
+   //  }
     
   
 ?>
