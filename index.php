@@ -17,7 +17,7 @@ header("Refresh:2; url={$base_url}");
       $_SESSION['is_login'] = true;
       $_SESSION['email'] = $email;
       
-       $msg = '<div class="alert alert-success col-sm-12 ml-5 mt-2" role="alert">You are Redirecting to dashboard....</div>';
+       $msg = '<div class="alert alert-success col-sm-12 ml-5 mt-2" role="alert">You are Redirecting...</div>';
       
        header("Refresh:3; url={$base_url}/admin/dashboard.php");
   

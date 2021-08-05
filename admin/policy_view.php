@@ -183,7 +183,7 @@ if(@$_SESSION['is_login']){
                                        
                     
                  <td>                          
-                <a href="policy_edit.php?insurance_number=<?php echo $row['insurance_number']?>&category=<?php echo $row['category']?>&product_type=<?php echo $row['product_type'];?>" value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
+                <a href="policy_edit.php?insurance_number=<?php echo $row['insurance_number']?>&category=<?php echo $row['category']?>&product_type=<?php echo $row['product_type']?>&category_value=<?php echo $row['category_value'];?>" value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
                 <a href='policy_delete.php?insurance_number=<?php echo $row['insurance_number'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
                 </td>
                                             
@@ -210,7 +210,13 @@ $result2 =mysqli_fetch_row($sum_total_amount);
     <div class="card bg-warning">
       <div class="card-body">
         <h5 class="card-title"><b>Total Amount :</b> </h5>
-        <p class="card-text"><?php echo ($result2[0]);?></p>
+        <p class="card-text">
+          <?php 
+          //echo ($result2[0]);
+         echo isset($result2[0])?$result2[0]:0;
+          ?>
+
+      </p>
         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
       </div>
     </div>
@@ -219,7 +225,13 @@ $result2 =mysqli_fetch_row($sum_total_amount);
     <div class="card bg-warning">
       <div class="card-body">
         <h5 class="card-title"><b>Total Due Amount :</b> </h5>
-        <p class="card-text"><?php echo ($result2[0]-$due);?></p>
+        <p class="card-text">
+          <?php
+          // echo ($result2[0]-$due);
+          $d_am = $result2[0]-@$due;
+          echo isset($d_am)?$d_am:0;
+          ?>
+        </p>
         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
       </div>
     </div>

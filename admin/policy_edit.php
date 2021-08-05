@@ -64,7 +64,7 @@ if(@$_SESSION['is_login']){
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <?php if(isset($msg)){echo $msg;}?>
-                    <p>Please fill in the form below to start the accounts entry:</p>
+                    <h2>Update Policy Details</h2>
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                     <!-- Page Heading -->

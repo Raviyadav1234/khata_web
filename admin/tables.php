@@ -158,7 +158,7 @@ if(@$_SESSION['is_login']){
                  <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Statement of Clients</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Statement of All Clients</h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -223,9 +223,8 @@ if(@$_SESSION['is_login']){
                                             <th>EMI3 Date</th>
                                             <th>EMI3 Amount</th>
                                             <th>Total Amount</th>
-                                            
                                             <th>Due Amount</th>
-                                            <th>Action</th>
+                                            <!-- <th>Action</th> -->
                                             
                                         </tr>
                                     </thead>
@@ -277,17 +276,15 @@ if(@$_SESSION['is_login']){
                                              
                                             
                                             <td><?php echo $due_balance;?></td>
-                                            <td>
-                <!-- <a href='edit.php?client_id=<?php echo $row['client_id'];?>' value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a> -->
+
+                                            <!-- <td>
+                <a href='edit.php?client_id=<?php echo $row['client_id'];?>' value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
                 <a href='delete.php?client_id=<?php echo $row['client_id'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
-                </td>
+                </td> -->
                                             
                                         </tr> 
                                     <?php } ?>
-                                     <!-- Display this <tr> when no record found while search -->
-                                       <tr class='notfound'>
-                                         <td colspan="4">No record found</td>
-                                       </tr>
+                                     
                                     
                                 </table>
                             </div>

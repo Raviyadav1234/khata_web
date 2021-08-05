@@ -42,7 +42,7 @@ $result1 = mysqli_query($conn,$sql1);
 if($result1){
     
      if($num_rows>0){
-        $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Client added Successfully </div>';
+        $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Registered Successfully </div>';
      
        header("Refresh:2; url={$base_url}/admin/policy_registration.php");
      }else{
@@ -53,7 +53,7 @@ if($result1){
        
       }else{
       
-       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Submit Your Request </div>';
+       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Registered Policy </div>';
         header("Refresh:2; url={$base_url}/admin/policy_registration.php");
       }
 
@@ -117,7 +117,7 @@ if($result1){
                     }
                     ?>
                     
-                    <p>Please fill in the form below to start the accounts entry:</p>
+                    <h2>Register Policy Here</h2>
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                     <!-- Page Heading -->
@@ -348,10 +348,10 @@ $("#myform,#category").change(function(){
 
 
 $("#clientid").select2({
-     placeholder: "Enter name or email",
+     placeholder: "Enter Client Id",
                         allowClear: true,
                         ajax: {
-                            url: "clients.php",
+                            url: "clients_autofill.php",
                             dataType: 'json',
                             data: function(params) {
                                 var query = {
@@ -362,7 +362,7 @@ $("#clientid").select2({
                             },
                             processResults: function(data) {
                                 var mydata = $.map(data.data, function (obj) {
-  obj.text = obj.text || obj.name; // replace name with the property used for the text
+  obj.text = obj.text || obj.name;
 
   return obj;
 });

@@ -6,7 +6,7 @@ session_start();
 if(@$_SESSION['is_login']){
  $email = @$_SESSION['email'];
 }else{
- // echo "<script> location.href='../index.php'; </script>";
+ 
     header("Location:{$base_url}");
 }
 
@@ -24,7 +24,7 @@ $sql = "INSERT INTO users(client_name, client_email, client_mobile) VALUES ('$na
  
     
     if($result){
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Client Register Successfully </div>';
+      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Client Registered Successfully </div>';
     
       header("Refresh:2; url={$base_url}/admin/client_registration.php");
     }else{
@@ -84,7 +84,7 @@ $sql = "INSERT INTO users(client_name, client_email, client_mobile) VALUES ('$na
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <?php if(isset($msg)){echo $msg;}?>
-                    <h1>Register Here</h1>
+                    <h2>Register Client Here</h2>
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                     <!-- Page Heading -->

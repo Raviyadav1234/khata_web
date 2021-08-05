@@ -24,12 +24,7 @@
      }
     //echo mysqli_error($conn);
       
-   //  if($result){
-      
-   //    $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Updated Successfully </div>';
-  
-   //    header("Refresh:0; url={$base_url}/admin/dashboard.php");
-   //  }
+   
     
   
 ?>

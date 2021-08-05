@@ -37,9 +37,9 @@ if(isset($_POST['submit_btn'])){
       
      if($affected_row>0){
     if($value>0){
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Client Updated Successfully </div>';
+      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> EMI3 Updated Successfully </div>';
     
-      header("Refresh:2; url={$base_url}/admin/tables.php");
+      header("Refresh:2; url={$base_url}/admin/dashboard.php");
     }else{
         $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Update EMI2 first</div>';
        header("Refresh:2; url={$base_url}/admin/emi3_update.php");
@@ -47,15 +47,11 @@ if(isset($_POST['submit_btn'])){
 
     
       } else {
-       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update Your Request </div>';
+       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update EMI3 </div>';
        header("Refresh:2; url={$base_url}/admin/emi3_update.php");
       }
 
-        
-
    
-
-    
    }
 
 
@@ -74,14 +70,16 @@ if(isset($_POST['submit_btn'])){
 
     <title>Karoinsure Khata Admin</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+   <!-- Custom fonts for this template-->
+   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
 </head>
 
@@ -104,12 +102,18 @@ if(isset($_POST['submit_btn'])){
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <?php if(isset($msg)){echo $msg;}?>
-                    <p>Please update the form below update accounts entry:</p>
+                    <h2>Update EMI3 Here</h2>
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                     <!-- Page Heading -->
                     
                     <form method="POST" id="myform" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+
+
+                    <div class="form-group">
+                            <label for="exampleFormControlInput1">Client Id</label>
+                            <select type="text" name="client_id" class="form-control" id="clientid" placeholder="Enter Id" required ></select>
+                        </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Insurance Policy Number</label>
@@ -203,6 +207,39 @@ if(isset($_POST['submit_btn'])){
  <?php require_once  'includes/footer.php';?>
 
 
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+
+
+$("#clientid").select2({
+     placeholder: "Enter Client Id",
+                        allowClear: true,
+                        ajax: {
+                            url: "clients_autofill.php",
+                            dataType: 'json',
+                            data: function(params) {
+                                var query = {
+                                    search: params.term,
+                                }
+
+                                return query;
+                            },
+                            processResults: function(data) {
+                                var mydata = $.map(data.data, function (obj) {
+  obj.text = obj.text || obj.name;
+
+  return obj;
+});
+                                return {
+                                    results: mydata
+                                };
+                            }
+                        },
+                        minimumInputLength: 1,
+
+                    })
+    </script>
 
 
  
