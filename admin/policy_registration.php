@@ -24,6 +24,7 @@ if(isset($_POST['submit_btn'])){
       $credit_debit_amount1 = sanatise(@$_POST['credit_debit_amount1']);
       $credit_debit_amount2 = sanatise(@$_POST['credit_debit_amount2']);
       $entry_date = sanatise($_POST['entry_date']);
+      $emi2_expected_date = sanatise($_POST['emi2_expected_date']);
       $payment_mode = sanatise($_POST['payment_mode']);
       $payment_reference_number = sanatise($_POST['payment_reference_number']);
 
@@ -32,7 +33,7 @@ $sql = "SELECT id FROM users WHERE id ='{$client_id}'";
 $result = mysqli_query($conn,$sql);
 $num_rows =mysqli_num_rows($result);
 
-     $sql1 = "INSERT INTO policy_data ( client_id,category,category_value, product_type, vehicle_number, vehicle_model, insurance_number, insurance_startdate, insurance_enddate, total_amount, credit_debit_amount, credit_debit_amount1, credit_debit_amount2, entry_date, entry_date1, entry_date2, payment_mode, payment_reference_number) VALUES ('$client_id', '$category','$category_value', '$product_type', '$vehicle_number', '$vehicle_model', '$insurance_number', '$insurance_startdate', '$insurance_enddate', '$total_amount', '$credit_debit_amount', '0' , '0' , '$entry_date', '', '', '$payment_mode', '$payment_reference_number')" ;
+     $sql1 = "INSERT INTO policy_data ( client_id,category,category_value, product_type, vehicle_number, vehicle_model, insurance_number, insurance_startdate, insurance_enddate, total_amount, credit_debit_amount, credit_debit_amount1, credit_debit_amount2, entry_date, entry_date1, entry_date2, emi2_expected_date, emi3_expected_date, payment_mode, payment_reference_number) VALUES ('$client_id', '$category','$category_value', '$product_type', '$vehicle_number', '$vehicle_model', '$insurance_number', '$insurance_startdate', '$insurance_enddate', '$total_amount', '$credit_debit_amount', '0' , '0' , '$entry_date', '', '', '$emi2_expected_date', '', '$payment_mode', '$payment_reference_number')" ;
 
 // echo "<pre>";
 // print_r($_POST);
@@ -257,6 +258,11 @@ if($result1){
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Enter Date</label>
                             <input type="date" class="form-control" name="entry_date" id="exampleFormControlInput1" placeholder="15/06/2021" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Enter EMI2 Reminder Date</label>
+                            <input type="date" class="form-control" name="emi2_expected_date" id="exampleFormControlInput1" placeholder="15/06/2021">
                         </div>
                        
                         <div class="form-group">

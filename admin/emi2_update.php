@@ -13,6 +13,7 @@ if(isset($_POST['submit_btn'])){
       $insurance_number = sanatise($_POST['insurance_number']);
       $credit_debit_amount1 = sanatise($_POST['credit_debit_amount1']);
       $entry_date1 = sanatise($_POST['entry_date1']);
+      $emi3_expected_date = sanatise($_POST['emi3_expected_date']);
       $payment_mode = sanatise($_POST['payment_mode']);
 
      // $sql = "UPDATE client (client_id, insurance_number, credit_debit_amount1, credit_debit_amount2, entry_date, payment_mode,) VALUES ('$client_id', '$insurance_number','$credit_debit_amount1', '$credit_debit_amount2', '$entry_date', '$payment_mode')" ;
@@ -20,6 +21,7 @@ if(isset($_POST['submit_btn'])){
         insurance_number ='{$insurance_number}', 
         credit_debit_amount1='{$credit_debit_amount1}',
         entry_date1='{$entry_date1}',
+        emi3_expected_date='{$emi3_expected_date}',
         payment_mode ='{$payment_mode}'
         WHERE insurance_number='{$insurance_number}'
         " ;
@@ -174,6 +176,11 @@ if(isset($_POST['submit_btn'])){
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Enter Date</label>
                             <input type="date" class="form-control" name="entry_date1" id="exampleFormControlInput1" placeholder="15/06/2021" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Enter EMI3 Reminder Date</label>
+                            <input type="date" class="form-control" name="emi3_expected_date" id="exampleFormControlInput1" placeholder="15/06/2021">
                         </div>
                        
                         <div class="form-group">

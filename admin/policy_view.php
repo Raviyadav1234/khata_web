@@ -107,11 +107,13 @@ if(@$_SESSION['is_login']){
                                             <th>Expiry Status</th>
                                             <th>Payment Mode</th>
                                             <th>Payment Reference Number</th>
-                                            <th>EMI1 Date</th>
+                                            <th>EMI1 Fill Date</th>
+                                            <th>EMI2 Reminder Date</th>
                                             <th>EMI1 Amount</th>
-                                            <th>EMI2 Date</th>
+                                            <th>EMI2 Fill Date</th>
+                                            <th>EMI3 Reminder Date</th>
                                             <th>EMI2 Amount</th>
-                                            <th>EMI3 Date</th>
+                                            <th>EMI3 Fill Date</th>
                                             <th>EMI3 Amount</th>
                                             <th>Total Amount</th>
                                             <th>Due Amount</th>
@@ -166,10 +168,12 @@ if(@$_SESSION['is_login']){
                                             <td><?php echo $row['payment_reference_number'];?></td>
                                             
                                             <td><?php echo $row['entry_date'];?></td>
+                                            <td><?php echo $row['emi2_expected_date'];?></td>
                                             <td><?php 
                                              $due+= $row['credit_debit_amount'];
                                             echo $row['credit_debit_amount'];?></td>
                                             <td><?php echo $row['entry_date1'];?></td>
+                                            <td><?php echo $row['emi3_expected_date'];?></td>
                                             <td><?php
                                              $due+= $row['credit_debit_amount1'];
                                              echo $row['credit_debit_amount1'];?></td>
