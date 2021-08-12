@@ -129,23 +129,7 @@ if($result1){
                             <label for="exampleFormControlInput1">Client Id</label>
                             <select type="text" name="client_id" class="form-control" id="clientid" placeholder="Enter Id" required ></select>
                         </div>
-                        <!-- <?php
-                        // $client_id = sanatise($_POST['client_id']);
-                        // $sql2 = "SELECT * FROM users WHERE id = '{$client_id}' ";
-                        // $result2= mysqli_query($conn,$sql2);
-                        // $row2 = mysqli_fetch_assoc($result2);
-                        // $cl_name = $row2['client_name'];
-                        // $cl_email = $row2['client_email'];
-                        // $cl_mobile = $row2['client_mobile'];
-                        // ?>
-                        <script>
-                        function myFunction() {
-                            var cl_name = '<?php echo $cl_name; ?>';
-                            var cl_email = '<?php echo $cl_email; ?>';
-                            var cl_mobile = '<?php echo $cl_mobile; ?>';
-                        alert(cl_name);
-                        }
-                        </script> -->
+                        
 
                         <div class="form-group" id="fornext">
                           <label for="exampleFormControlSelect1">Select Category</label>
@@ -368,9 +352,9 @@ $("#clientid").select2({
                             },
                             processResults: function(data) {
                                 var mydata = $.map(data.data, function (obj) {
-  obj.text = obj.text || obj.name;
+                                obj.text = obj.text || obj.name;
 
-  return obj;
+                                return obj;
 });
                                 return {
                                     results: mydata

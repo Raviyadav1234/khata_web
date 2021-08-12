@@ -62,20 +62,22 @@ if($result){
 	$diff_days = $today_date-$expire_date;
 	$remain_date = abs(floor($diff_days/(60*60*24)));
 	// echo "<pre>";
-	// print_r($remain_date);
+	// print_r($exp_date);
+	// exit;
 	if($remain_date==7){
 
 		$mail = new PHPMailer();
+		//$mail->SMTPDebug = 3;
 		$mail->IsSMTP();
 		$mail->Host = "smtp.gmail.com";
 		$mail->Port = "587";
 		$mail->SMTPAuth = TRUE;
 		$mail->SMTPSecure = 'tls'; 
-		$mail->Username = "raviyadav2017sln@gmail.com";
-		$mail->Password = "YadavJi@SaraiGokul&_!#@$228125";
-		$mail->SetFrom("raviyadav2017sln@gmail.com", "By Ravi");
+		$mail->Username = "Your Email";
+		$mail->Password = "Your Password";
+		$mail->SetFrom("Email from you send email", "By Ravi");
 		$mail->AddAddress($email);
-		$mail->addReplyTo('raviyadav2017sln@gmail.com');
+		$mail->addReplyTo('');
 		$mail->IsHTML(true);
 		$mail->Subject = " From Karoinsure";
 		$mail->Body     .= "<h1>Your insurance will expire in 7 days please renew this</h1><br/>"; 
@@ -85,10 +87,9 @@ if($result){
 		$send_mail = $mail->Send();
 
 		if($send_mail){
-            
-            echo "<script type='text/javascript'> 
-            localStorage.setItem('notification', '$email');
- </script>";
+       
+			$query = "INSERT INTO policy_notification(policy_reminder_email) VALUES('{$email}')";
+			mysqli_query($conn,$query);
 			echo "email sent <br>";
 			
 		}else{

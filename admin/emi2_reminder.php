@@ -35,9 +35,11 @@ policy_data.credit_debit_amount2,
 policy_data.entry_date,
 policy_data.entry_date1,
 policy_data.entry_date2,
+policy_data.emi2_expected_date,
+policy_data.emi3_expected_date,
 policy_data.payment_mode,
 policy_data.payment_reference_number
-FROM users JOIN policy_data ON users.id=policy_data.client_id WHERE emi2_expected_date > $today";
+FROM users JOIN policy_data ON users.id=policy_data.client_id WHERE emi2_expected_date>$today";
 
 $result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_all($result,MYSQLI_ASSOC);
@@ -58,34 +60,41 @@ if($result){
 
 	for($i=0;$i<$rowcount;$i++){
 	$email=$row[$i]['client_email'];
-    $exp_date=@$row[$i]['emi2_expected_date'];
+    $exp_date=$row[$i]['emi2_expected_date'];
 	$expire_date = strtotime($exp_date);
 	$diff_days = $today_date-$expire_date;
 	$remain_date = abs(floor($diff_days/(60*60*24)));
+
 	// echo "<pre>";
 	// print_r($remain_date);
+	
 	if($remain_date==7){
 
 		$mail = new PHPMailer();
+		//$mail->SMTPDebug = 3;
 		$mail->IsSMTP();
 		$mail->Host = "smtp.gmail.com";
 		$mail->Port = "587";
 		$mail->SMTPAuth = TRUE;
 		$mail->SMTPSecure = 'tls'; 
-		$mail->Username = " Your email";
-		$mail->Password = "password";
-		$mail->SetFrom("email from you send email", "By Ravi");
+		$mail->Username = "Your Email";
+		$mail->Password = "Your Password";
+		$mail->SetFrom("Email From you sent email", "By Ravi");
 		$mail->AddAddress($email);
-		$mail->addReplyTo('email ');
+		$mail->addReplyTo('');
 		$mail->IsHTML(true);
 		$mail->Subject = " From Karoinsure";
-		$mail->Body     .= "<h2>You can fill Your EMI-3 before 7 days </h1><br/>"; 
+		$mail->Body     .= "<h1>Your Should fill your EMI2 before 7 days</h1><br/>"; 
 		$mail->Body     .= "Cantact Number:XXXXXXXXX<br/>";
 		$mail->Body     .= "Email Number: xyz@gmail.com<br/>";
 		
 		$send_mail = $mail->Send();
 
 		if($send_mail){
+
+			$query = "INSERT INTO emi2_notification(emi2_reminder_email) VALUES('{$email}')";
+			mysqli_query($conn,$query);
+
 			echo "email sent <br>";
 			
 		}else{

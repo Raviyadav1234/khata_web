@@ -1,3 +1,10 @@
+         <style>
+             hr.new1 {
+                border: 1px solid red;
+                }
+           
+         </style>
+
          <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -48,52 +55,156 @@
                         </li>
 
                         <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span  class="badge badge-danger badge-counter" id="demo">
-                              <?php 
+                       
+                        <li class="dropdown notification-list">
+                        <a class="nav-link dropdown-toggle  waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                            <span class="badge badge-danger rounded-circle noti-icon-badge">
+                                <?php
+                                
+                                $res1 = mysqli_query($conn,"SELECT * FROM policy_notification");
+                                $nm_rows1=mysqli_num_rows($res1);
 
-                                echo "<script type='text/javascript'> 
-                                
-                                    var x = localStorage.length;
-                                    document.getElementById('demo').innerHTML = x;
-                                   
-                                  
-                                </script>";
-                              
-                              ?>
-                                </span>
-                                
-                               
-                            </a>
-                            
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#" id="noti">
-                                    <div class="dropdown-list-image mr-3">
-                                    <?php
-                            
-                            echo "<script type='text/javascript'> 
-                            
-                            document.getElementById('noti').innerHTML = '<b>Email sent to :-</b> '+localStorage.getItem('notification');
-                            </script>"; 
-                         
-                           ?>
-                                   
-                                    </div>
-                                    
-                                </a>
-                                
-                              
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                $res2 = mysqli_query($conn,"SELECT * FROM emi2_notification");
+                                $nm_rows2=mysqli_num_rows($res2);
+
+                                $res3 = mysqli_query($conn,"SELECT * FROM emi3_notification");
+                                $nm_rows3=mysqli_num_rows($res3);
+
+                                $total_res =$nm_rows1+$nm_rows2+$nm_rows3;
+                                echo $total_res;
+                                ?>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-lg">
+
+                            <!-- item-->
+                            <div class="dropdown-item noti-title">
+                                <h5 class="m-0">
+                                    <span class="float-right">
+                                        <a href="notification_delete.php" class="text-dark">
+                                            <small>Clear All</small>
+                                        </a>
+                                    </span>Notification
+                                </h5>
                             </div>
-                        </li>
+
+                            
+
+                            <div style="overflow: auto;height:250px;width:300px;">
+                            <?php 
+                                
+                                $res1 = mysqli_query($conn,"SELECT policy_reminder_email FROM policy_notification");
+                           
+                                $nm_rows1=mysqli_num_rows($res1);
+                                 if($nm_rows1>0){
+                                     while($rows = mysqli_fetch_assoc($res1)){
+                                         
+                             
+                                ?>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon">
+                                       </div>
+                                    <p class="notify-details"><b>Email sent for policy reminder:-</b></p>
+                                    
+                                    <p class="text-muted mb-0 user-msg">
+                                        <small class="text-dark">
+                                            <?php
+                                             if(isset($rows['policy_reminder_email'])){
+                                                echo $rows['policy_reminder_email'];
+                                            }else{
+                                                echo "NULL";
+                                            }
+                                            ?>
+                                        </small>
+                                    </p>
+                                    <hr class="new1">
+                                </a>
+                                <?php
+                                    }
+                                    }
+                                ?> 
+
+                            <?php 
+                                
+                                $res1 = mysqli_query($conn,"SELECT emi2_reminder_email FROM emi2_notification");
+                           
+                                $nm_rows1=mysqli_num_rows($res1);
+                                 if($nm_rows1>0){
+                                     while($rows = mysqli_fetch_assoc($res1)){
+                          
+                                  
+                                ?>
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon">
+                                       </div>
+                                    <p class="notify-details"><b>Email sent for EMI2 reminder:-</b></p>
+                                    
+                                    <p class="text-muted mb-0 user-msg">
+                                        <small class="text-dark">
+                                            <?php
+                                        if(isset($rows['emi2_reminder_email'])){
+                                            echo $rows['emi2_reminder_email'];
+                                        }else{
+                                            echo "NULL";
+                                        }
+                                            ?>
+                                        </small>
+                                    </p>
+                                    <hr class="new1">
+                                </a>
+                                <?php
+                                    }
+                                    }
+                                ?> 
+ 
+                                
+                             <?php 
+                                
+                                $res1 = mysqli_query($conn,"SELECT emi3_reminder_email FROM emi3_notification");
+                           
+                                $nm_rows1=mysqli_num_rows($res1);
+                                 if($nm_rows1>0){
+                                     while($rows = mysqli_fetch_assoc($res1)){
+                               
+                                ?>
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon">
+                                       </div>
+                                    <p class="notify-details"><b>Email sent for EMI3 reminder:-</b></p>
+                                    
+                                    <p class="text-muted mb-0 user-msg">
+                                        <small class="text-dark">
+                                            <?php
+                                            
+                                            if(isset($rows['emi3_reminder_email'])){
+                                                echo $rows['emi3_reminder_email'];
+                                            }else{
+                                                echo "NULL";
+                                            }
+                                            ?>
+                                        </small>
+                                    </p>
+                                    <hr class="new1">
+                                </a>
+                                <?php
+                                    }
+                                    }
+                                ?> 
+                                
+                                
+                            </div>
+                            
+
+                            <!-- All-->
+                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                View all
+                                <i class="fi-arrow-right"></i>
+                            </a>
+
+                        </div>
+                    </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 

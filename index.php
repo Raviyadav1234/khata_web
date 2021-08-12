@@ -8,11 +8,16 @@ if(!isset($_SESSION['is_login'])){
 $msg = '<div class="alert alert-danger mt-2" role="alert"> All Fields are Required </div>';
 header("Refresh:2; url={$base_url}");
     }else{
-      $email = sanatise($_POST['email']);
-    $password = sanatise($_POST['password']);
-    $sql = "SELECT email, password FROM tbl_login WHERE email='".$email."' AND password='".$password."' limit 1";
+    // $email = sanatise($_POST['email']);
+    // $password = sanatise($_POST['password']);
+    $email = mysqli_real_escape_string($conn,$_POST['email']);
+    $password = mysqli_real_escape_string($conn,$_POST['password']);
+    
+     $sql = "SELECT email, password FROM tbl_login WHERE email='".$email."' AND password='".$password."' limit 1";
+  
+   //SELECT email, password FROM tbl_login WHERE email='raviyadav2017sln@gmail.com' AND password=''' ' or'1=1' limit 1
     $result = mysqli_query($conn,$sql);
-    if(mysqli_num_rows($result) == 1){
+    if(mysqli_num_rows($result)>0){
       
       $_SESSION['is_login'] = true;
       $_SESSION['email'] = $email;
@@ -33,9 +38,8 @@ header("Refresh:2; url={$base_url}");
   header("Location:{$base_url}/admin/dashboard.php");
 }
 
-
+//' ' or'1=1
 ?>
-
 
 
 <!DOCTYPE html>
