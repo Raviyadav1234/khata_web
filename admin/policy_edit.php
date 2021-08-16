@@ -109,9 +109,9 @@ if(@$_SESSION['is_login']){
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Upload File</label>
-                            <input type="text" name="file_old_name" value="<?php echo $row['image'];?>"/>
-                            <input type="file" name="file_new_name" class="form-control" id="exampleFormControlInput1" value="" />
+                            <input type="file" name="file_name" class="form-control" id="exampleFormControlInput1" value="" />
                             <img src="file_upload/<?php echo $row['image'];?>" class="h-25 w-25 img-thumbnail img-fluid">
+                            <span><?php echo $row['image'];?></span>
                         </div>
                    
                         <div class="form-group" id="product_type">

@@ -9,6 +9,17 @@ if(@$_SESSION['is_login']){
     header("Location:{$base_url}");
 }
 
+        //this variable is for file uploadind
+        $errors=array();
+        $maxsize = 2097152;
+        $acceptable = array(
+        'application/pdf',
+        'image/jpeg',
+        'image/jpg',
+        'image/png'
+        );
+
+
 if(isset($_POST['submit_btn'])){
       $client_id = sanatise($_POST['client_id']);
       $category = sanatise($_POST['category']);
@@ -30,15 +41,17 @@ if(isset($_POST['submit_btn'])){
 
       $file_name = $_FILES["file_name"]["name"];
       $tmp_name = $_FILES["file_name"]["tmp_name"];
+      $file_size = $_FILES["file_name"]["size"];
+      $file_type = $_FILES["file_name"]["type"];
       $folder = "file_upload/".$file_name;
-      $upload = move_uploaded_file($tmp_name,$folder);
+    
 
 
 $sql = "SELECT id FROM users WHERE id ='{$client_id}'";
 $result = mysqli_query($conn,$sql);
 $num_rows =mysqli_num_rows($result);
 
-     echo $sql1 = "INSERT INTO policy_data ( client_id,category,category_value, product_type, vehicle_number, vehicle_model, insurance_number, image, insurance_startdate, insurance_enddate, total_amount, credit_debit_amount, credit_debit_amount1, credit_debit_amount2, entry_date, entry_date1, entry_date2, emi2_expected_date, emi3_expected_date, payment_mode, payment_reference_number) VALUES ('$client_id', '$category','$category_value', '$product_type', '$vehicle_number', '$vehicle_model', '$insurance_number', '$file_name', '$insurance_startdate', '$insurance_enddate', '$total_amount', '$credit_debit_amount', '0' , '0' , '$entry_date', '', '', '$emi2_expected_date', '', '$payment_mode', '$payment_reference_number')" ;
+     $sql1 = "INSERT INTO policy_data ( client_id,category,category_value, product_type, vehicle_number, vehicle_model, insurance_number, image, insurance_startdate, insurance_enddate, total_amount, credit_debit_amount, credit_debit_amount1, credit_debit_amount2, entry_date, entry_date1, entry_date2, emi2_expected_date, emi3_expected_date, payment_mode, payment_reference_number) VALUES ('$client_id', '$category','$category_value', '$product_type', '$vehicle_number', '$vehicle_model', '$insurance_number', '$file_name', '$insurance_startdate', '$insurance_enddate', '$total_amount', '$credit_debit_amount', '0' , '0' , '$entry_date', '', '', '$emi2_expected_date', '', '$payment_mode', '$payment_reference_number')" ;
 
 // echo "<pre>";
 // print_r($_POST);
@@ -46,9 +59,25 @@ $num_rows =mysqli_num_rows($result);
 // exit();
 $result1 = mysqli_query($conn,$sql1);
 if($result1){
-    move_uploaded_file($tmp_name,$folder);
-    
+   
      if($num_rows>0){
+
+        if(($file_size >= $maxsize) || ($file_size== 0)){
+            $errors[] = 'File too large. File must be less than 2 MB.';
+        }
+        if((!in_array($file_type, $acceptable)) && (!empty($file_type))){
+            $errors[] = 'Invalid file type. Only PDF, JPG and PNG types are accepted.';
+        }
+
+            if(count($errors) === 0) {
+            move_uploaded_file($tmp_name,$folder);
+        } else {
+            foreach($errors as $error) {
+                echo '<script>alert("'.$error.'");</script>';
+            }
+            header("Location:{$base_url}/admin/policy_registration.php");  
+        }
+
         $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Registered Successfully </div>';
      
        header("Refresh:2; url={$base_url}/admin/policy_registration.php");
