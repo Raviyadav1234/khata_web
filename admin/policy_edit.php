@@ -69,7 +69,7 @@ if(@$_SESSION['is_login']){
                         <div class="col-lg-6 col-sm-12">
                     <!-- Page Heading -->
                     
-                    <form method="POST" id="myform" action="policy_updatedata.php">
+                    <form method="POST" id="myform" action="policy_updatedata.php" enctype="multipart/form-data">
                     
                     <div class="form-group">
                             <label for="exampleFormControlInput1">Client Id</label>
@@ -105,6 +105,13 @@ if(@$_SESSION['is_login']){
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Insurance Policy Number</label>
                             <input type="text" name="insurance_number" class="form-control" id="exampleFormControlInput1" placeholder="ABIUN78514646" required value="<?php echo $row['insurance_number'];?>" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Upload File</label>
+                            <input type="text" name="file_old_name" value="<?php echo $row['image'];?>"/>
+                            <input type="file" name="file_new_name" class="form-control" id="exampleFormControlInput1" value="" />
+                            <img src="file_upload/<?php echo $row['image'];?>" class="h-25 w-25 img-thumbnail img-fluid">
                         </div>
                    
                         <div class="form-group" id="product_type">

@@ -54,17 +54,9 @@ if(@$_SESSION['is_login']){
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <div class="row mb-3">
-                    <div class="col-sm-6">
                       <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Policy Details of Clients</h1>
-                    </div>
-
-                    <div class="col-sm-6">
-                    <a href="export_details.php"><button type="button" class="btn btn-primary">Export Data</button></a>
-                    </div>
-                    </div>
-
+                 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -105,6 +97,7 @@ if(@$_SESSION['is_login']){
                                         <tr>
                                             <th>CLient_Id</th>
                                             <th>Policy Number</th>
+                                            <th>Image</th>
                                             <th>Category</th>
                                             <th>Sub Category</th>
                                             <th>Product Type</th>
@@ -145,6 +138,7 @@ if(@$_SESSION['is_login']){
                                         <tr>
                                             <td><?php echo $row['client_id'];?></td>
                                             <td><?php echo $row['insurance_number'];?></td>
+                                            <td><img src="file_upload/<?php echo $row['image'];?>" class="h-200 w-200 img-thumbnail img-fluid"/></td>
                                    
                                             <td><?php echo $row['category'];?></td>
                                             <td><?php echo $row['category_value'];?></td>
@@ -195,7 +189,7 @@ if(@$_SESSION['is_login']){
                                        
                     
                  <td>                          
-                <a href="policy_edit.php?insurance_number=<?php echo $row['insurance_number']?>&category=<?php echo $row['category']?>&product_type=<?php echo $row['product_type']?>&category_value=<?php echo $row['category_value'];?>" value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
+                <a href="policy_edit.php?insurance_number=<?php echo $row['insurance_number']?>&category=<?php echo $row['category']?>&product_type=<?php echo $row['product_type']?>&category_value=<?php echo $row['category_value']?>&image_name=<?php echo $row['image'];?>" value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
                 <a href='policy_delete.php?insurance_number=<?php echo $row['insurance_number'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
                 </td>
                                             
