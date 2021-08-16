@@ -58,44 +58,24 @@ $num_rows =mysqli_num_rows($result);
 // echo "</pre>";
 // exit();
 $result1 = mysqli_query($conn,$sql1);
-if($result1){
-   
-     if($num_rows>0){
 
-        if(($file_size >= $maxsize) || ($file_size== 0)){
-            $errors[] = 'File too large. File must be less than 2 MB.';
-        }
-        if((!in_array($file_type, $acceptable)) && (!empty($file_type))){
-            $errors[] = 'Invalid file type. Only PDF, JPG and PNG types are accepted.';
-        }
+if(($file_size >= $maxsize) || ($file_size== 0)){
+    $error_1='File Size too large';
+   echo '<script>alert("'.$error_1.'")</script>';
 
-            if(count($errors) === 0) {
-            move_uploaded_file($tmp_name,$folder);
-        } else {
-            foreach($errors as $error) {
-                echo '<script>alert("'.$error.'");</script>';
-            }
-            header("Location:{$base_url}/admin/policy_registration.php");  
-        }
-
-        $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Registered Successfully </div>';
-     
-       header("Refresh:2; url={$base_url}/admin/policy_registration.php");
-     }else{
-     $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Invalid Client Id </div>';
-     
-       header("Refresh:2; url={$base_url}/admin/policy_registration.php");
-     }
-       
-      }else{
+} elseif((!in_array($file_type, $acceptable)) && (!empty($file_type))){
+    $error_2='Format Not Supported.Only .jpeg,JPG,PDF,PNG files are accepted';
+    echo '<script>alert("'.$error_2.'")</script>';
+ } elseif($result1){
+    move_uploaded_file($tmp_name,$folder);
+    $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Registered Successfully </div>';
+    header("Refresh:2; url={$base_url}/admin/policy_registration.php");
+    }else{
       
        $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Registered Policy </div>';
         header("Refresh:2; url={$base_url}/admin/policy_registration.php");
       }
 
-
-
-      
 
 }
 
