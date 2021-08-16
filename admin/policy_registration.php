@@ -28,12 +28,17 @@ if(isset($_POST['submit_btn'])){
       $payment_mode = sanatise($_POST['payment_mode']);
       $payment_reference_number = sanatise($_POST['payment_reference_number']);
 
+      $file_name = $_FILES["file_name"]["name"];
+      $tmp_name = $_FILES["file_name"]["tmp_name"];
+      $folder = "file_upload/".$file_name;
+      $upload = move_uploaded_file($tmp_name,$folder);
+
 
 $sql = "SELECT id FROM users WHERE id ='{$client_id}'";
 $result = mysqli_query($conn,$sql);
 $num_rows =mysqli_num_rows($result);
 
-     $sql1 = "INSERT INTO policy_data ( client_id,category,category_value, product_type, vehicle_number, vehicle_model, insurance_number, insurance_startdate, insurance_enddate, total_amount, credit_debit_amount, credit_debit_amount1, credit_debit_amount2, entry_date, entry_date1, entry_date2, emi2_expected_date, emi3_expected_date, payment_mode, payment_reference_number) VALUES ('$client_id', '$category','$category_value', '$product_type', '$vehicle_number', '$vehicle_model', '$insurance_number', '$insurance_startdate', '$insurance_enddate', '$total_amount', '$credit_debit_amount', '0' , '0' , '$entry_date', '', '', '$emi2_expected_date', '', '$payment_mode', '$payment_reference_number')" ;
+     echo $sql1 = "INSERT INTO policy_data ( client_id,category,category_value, product_type, vehicle_number, vehicle_model, insurance_number, image, insurance_startdate, insurance_enddate, total_amount, credit_debit_amount, credit_debit_amount1, credit_debit_amount2, entry_date, entry_date1, entry_date2, emi2_expected_date, emi3_expected_date, payment_mode, payment_reference_number) VALUES ('$client_id', '$category','$category_value', '$product_type', '$vehicle_number', '$vehicle_model', '$insurance_number', '$file_name', '$insurance_startdate', '$insurance_enddate', '$total_amount', '$credit_debit_amount', '0' , '0' , '$entry_date', '', '', '$emi2_expected_date', '', '$payment_mode', '$payment_reference_number')" ;
 
 // echo "<pre>";
 // print_r($_POST);
@@ -41,6 +46,7 @@ $num_rows =mysqli_num_rows($result);
 // exit();
 $result1 = mysqli_query($conn,$sql1);
 if($result1){
+    move_uploaded_file($tmp_name,$folder);
     
      if($num_rows>0){
         $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Registered Successfully </div>';
@@ -123,7 +129,7 @@ if($result1){
                         <div class="col-lg-6 col-sm-12">
                     <!-- Page Heading -->
                     
-                    <form method="POST" id="myform" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <form method="POST" id="myform" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" enctype="multipart/form-data">
 
                        <div class="form-group">
                             <label for="exampleFormControlInput1">Client Id</label>
@@ -146,6 +152,11 @@ if($result1){
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Insurance Policy Number</label>
                             <input type="text" name="insurance_number" class="form-control" id="exampleFormControlInput1" placeholder="ABIUN78514646" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Upload File</label>
+                            <input type="file" name="file_name" class="form-control" id="exampleFormControlInput1" required>
                         </div>
                     
                         <div class="form-group" id="product_type">

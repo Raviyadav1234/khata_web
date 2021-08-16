@@ -54,8 +54,16 @@ if(@$_SESSION['is_login']){
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
+                    <div class="row mb-3">
+                    <div class="col-sm-6">
+                      <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Policy Details of Clients</h1>
+                    </div>
+
+                    <div class="col-sm-6">
+                    <a href="export_details.php"><button type="button" class="btn btn-primary">Export Data</button></a>
+                    </div>
+                    </div>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">

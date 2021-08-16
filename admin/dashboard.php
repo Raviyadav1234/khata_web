@@ -99,6 +99,7 @@ if(@$_SESSION['is_login']){
                                             <th>Client Email</th>
                                             <th>Client Mobile</th>
                                             <th>Policy Details</th>
+                                            <th>Export Data</th>
                                             <th>Action</th>
                                             
                                         </tr>
@@ -124,6 +125,11 @@ if(@$_SESSION['is_login']){
                 
                 <a href='policy_view.php?client_id=<?php echo $row['id'];?>' class="text-decoration-none"><span class="text-success">View</span>&nbsp;<i class="fa fa-eye text-success" aria-hidden="true"></i></a>
                 </td>
+                <td>                          
+                
+                <a href='export_details.php?client_id=<?php echo $row['id'];?>' class="btn btn-primary">Export</a>
+                </td>
+
                  <td>                          
                 <a href='client_edit.php?id=<?php echo $row['id'];?>' value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
                 <a href='client_delete.php?id=<?php echo $row['id'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
