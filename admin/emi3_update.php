@@ -11,45 +11,59 @@ if(@$_SESSION['is_login']){
 }
 
 if(isset($_POST['submit_btn'])){
-
+      $client_id = sanatise($_POST['client_id']);
       $insurance_number = sanatise($_POST['insurance_number']);
       $credit_debit_amount2 = sanatise($_POST['credit_debit_amount2']);
       $entry_date2 = sanatise($_POST['entry_date2']);
       $payment_mode = sanatise($_POST['payment_mode']);
 
-//sql for check if EMI2 is already fill
-   $sql = "SELECT * FROM policy_data WHERE insurance_number='{$insurance_number}'";
-   $result = mysqli_query($conn,$sql);
-   $row = mysqli_fetch_assoc($result);
-   $value = @$row['credit_debit_amount1'];
+    $sql = "SELECT * FROM policy_data WHERE insurance_number='{$insurance_number}' AND client_id='{$client_id}'";
+    $result = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_assoc($result);
+
+    if(@$row['client_id']==$client_id && @$row['insurance_number']==$insurance_number){
+
+    //sql for check if EMI2 is already fill
+    $sql1 = "SELECT * FROM policy_data WHERE insurance_number='{$insurance_number}'";
+    $result1 = mysqli_query($conn,$sql1);
+    $row1 = mysqli_fetch_assoc($result1);
+    $value = @$row1['credit_debit_amount1'];
+
+   $sql2 = "UPDATE policy_data SET
+     insurance_number ='{$insurance_number}', 
+     credit_debit_amount2='{$credit_debit_amount2}',
+     entry_date2='{$entry_date2}',
+     payment_mode ='{$payment_mode}'
+     WHERE insurance_number='{$insurance_number}'
+     " ;
+
+   $result2 = mysqli_query($conn,$sql2);
+   $affected_row = mysqli_affected_rows($conn);
+
    
-      $sql1 = "UPDATE policy_data SET
-        insurance_number ='{$insurance_number}', 
-        credit_debit_amount2='{$credit_debit_amount2}',
-        entry_date2='{$entry_date2}',
-        payment_mode ='{$payment_mode}'
-        WHERE insurance_number='{$insurance_number}'
-        " ;
+  if($affected_row>0){
+ if($value>0){
+   $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> EMI3 Updated Successfully </div>';
+ 
+   header("Refresh:2; url={$base_url}/admin/dashboard.php");
+ }else{
+     $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Update EMI2 first</div>';
+    header("Refresh:2; url={$base_url}/admin/emi3_update.php");
+ }
 
-      $result1 = mysqli_query($conn,$sql1);
-      $affected_row = mysqli_affected_rows($conn);
+ 
+   } else {
+    $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update EMI3 </div>';
+    header("Refresh:2; url={$base_url}/admin/emi3_update.php");
+   }
 
-      
-     if($affected_row>0){
-    if($value>0){
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> EMI3 Updated Successfully </div>';
-    
-      header("Refresh:2; url={$base_url}/admin/dashboard.php");
+
     }else{
-        $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Update EMI2 first</div>';
-       header("Refresh:2; url={$base_url}/admin/emi3_update.php");
+        $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert">Invalid Client Id or Insurance Number</div>';
+        header("Refresh:2; url={$base_url}/admin/emi3_update.php");
     }
 
-    
-      } else {
-       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update EMI3 </div>';
-       header("Refresh:2; url={$base_url}/admin/emi3_update.php");
-      }
+
 
    
    }

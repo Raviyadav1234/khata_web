@@ -10,14 +10,19 @@ if(@$_SESSION['is_login']){
 }
 
 if(isset($_POST['submit_btn'])){
+      $client_id = sanatise($_POST['client_id']);
       $insurance_number = sanatise($_POST['insurance_number']);
       $credit_debit_amount1 = sanatise($_POST['credit_debit_amount1']);
       $entry_date1 = sanatise($_POST['entry_date1']);
       $emi3_expected_date = sanatise($_POST['emi3_expected_date']);
       $payment_mode = sanatise($_POST['payment_mode']);
 
-     // $sql = "UPDATE client (client_id, insurance_number, credit_debit_amount1, credit_debit_amount2, entry_date, payment_mode,) VALUES ('$client_id', '$insurance_number','$credit_debit_amount1', '$credit_debit_amount2', '$entry_date', '$payment_mode')" ;
-      $sql = "UPDATE policy_data SET
+    $sql = "SELECT * FROM policy_data WHERE insurance_number='{$insurance_number}' AND client_id='{$client_id}'";
+    $result = mysqli_query($conn,$sql);
+    $row = mysqli_fetch_assoc($result);
+    if(@$row['client_id']==$client_id && @$row['insurance_number']==$insurance_number){
+
+        $sql1 = "UPDATE policy_data SET
         insurance_number ='{$insurance_number}', 
         credit_debit_amount1='{$credit_debit_amount1}',
         entry_date1='{$entry_date1}',
@@ -25,7 +30,7 @@ if(isset($_POST['submit_btn'])){
         payment_mode ='{$payment_mode}'
         WHERE insurance_number='{$insurance_number}'
         " ;
-      $result = mysqli_query($conn,$sql);
+      $result1 = mysqli_query($conn,$sql1);
       $affected_row = mysqli_affected_rows($conn);
       
       if($affected_row>0){
@@ -40,6 +45,14 @@ if(isset($_POST['submit_btn'])){
        $msg_err = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update EMI2 </div>';
        header("Refresh:2; url={$base_url}/admin/emi2_update.php");
       }
+
+    }else{
+        //echo $sql;
+        $msg_err = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert">Invalid Client Id or Insurance Number</div>';
+        header("Refresh:2; url={$base_url}/admin/emi2_update.php");
+    }
+
+     
     
    }
 
