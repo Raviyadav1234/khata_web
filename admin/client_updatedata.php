@@ -31,11 +31,24 @@ if($client_name=="" || $client_email=="" || $client_mobile==""){
 
   
   if($result){
-    $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Client Updated Successfully </div>';
-  
+
+    $_SESSION['msg_start'] = time();
+    $_SESSION["success"]='<div class="alert alert-success alert-dismissible fade show" role="alert"> Client Updated Successfully 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>';
+
     header("Refresh:0; url={$base_url}/admin/dashboard.php");
   }else{
-      $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update</div>';
+
+    $_SESSION['msg_start'] = time();
+        $_SESSION["error"]='<div class="alert alert-danger alert-dismissible fade show" role="alert">Unable to Update
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>';
+      
      header("Refresh:2; url={$base_url}/admin/client_edit.php");
   }
 }

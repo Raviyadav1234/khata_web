@@ -191,10 +191,10 @@ if(@$_SESSION['is_login']){
                             <input type="text" value="<?php echo $row['credit_debit_amount'];?>" name="credit_debit_amount" class="form-control" id="exampleFormControlInput1" placeholder="10000">
                         </div>
                         <div id="hidden_div1" style="display:none;">
-                        <p><strong>Update EMI 1 first</strong></p>
+                        <p class="text-danger"><strong>Update EMI 1 first</strong></p>
                         </div>
                         <div id="hidden_div2" style="display:none;">
-                        <p><strong>Update EMI 1 first</strong></p>
+                        <p class="text-danger"><strong>Update EMI 1 first</strong></p>
                         </div>
                         </div>
                         
@@ -231,7 +231,12 @@ if(@$_SESSION['is_login']){
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Enter Date</label>
-                            <input type="date" class="form-control" name="entry_date" id="exampleFormControlInput1" placeholder="15/06/2021" required value="<?php echo $row['entry_date'];?>">
+                            <input type="date" class="form-control" name="entry_date" id="exampleFormControlInput1" required value="<?php echo $row['entry_date'];?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Enter EMI2 Reminder Date</label>
+                            <input type="date" class="form-control" name="emi2_expected_date" id="exampleFormControlInput1" value="<?php echo $row['emi2_expected_date'];?>">
                         </div>
                        
                         <div class="form-group">

@@ -57,24 +57,31 @@ $num_rows =mysqli_num_rows($result);
 // print_r($_POST);
 // echo "</pre>";
 // exit();
-$result1 = mysqli_query($conn,$sql1);
 
-if(($file_size >= $maxsize) || ($file_size== 0)){
-    $error_1='File Size too large';
-   echo '<script>alert("'.$error_1.'")</script>';
+   if(($file_size <= $maxsize) && ($file_size!== 0)){
 
-} elseif((!in_array($file_type, $acceptable)) && (!empty($file_type))){
-    $error_2='Format Not Supported.Only .jpeg,JPG,PDF,PNG files are accepted';
-    echo '<script>alert("'.$error_2.'")</script>';
- } elseif($result1){
-    move_uploaded_file($tmp_name,$folder);
-    $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Registered Successfully </div>';
-    header("Refresh:2; url={$base_url}/admin/policy_registration.php");
-    }else{
-      
-       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Registered Policy </div>';
+   if((in_array($file_type, $acceptable)) && (!empty($file_type))){
+    $result1 = mysqli_query($conn,$sql1);
+ 
+    if($result1){
+        move_uploaded_file($tmp_name,$folder);
+        $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Registered Successfully </div>';
         header("Refresh:2; url={$base_url}/admin/policy_registration.php");
-      }
+        }else{
+          
+           $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Registered Policy </div>';
+            header("Refresh:2; url={$base_url}/admin/policy_registration.php");
+          }
+
+ }else{
+    $error_2='Only JPEG,JPG,PDF,PNG files are accepted';
+    echo '<script>alert("'.$error_2.'")</script>';
+ }
+
+}else{
+    $error_1='File Size should be 2MB or less than 2MB';
+   echo '<script>alert("'.$error_1.'")</script>';
+}  
 
 
 }
@@ -261,12 +268,12 @@ if(($file_size >= $maxsize) || ($file_size== 0)){
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Enter Date</label>
-                            <input type="date" class="form-control" name="entry_date" id="exampleFormControlInput1" placeholder="15/06/2021" required>
+                            <input type="date" class="form-control" name="entry_date" id="exampleFormControlInput1" required>
                         </div>
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Enter EMI2 Reminder Date</label>
-                            <input type="date" class="form-control" name="emi2_expected_date" id="exampleFormControlInput1" placeholder="15/06/2021">
+                            <input type="date" class="form-control" name="emi2_expected_date" id="exampleFormControlInput1" required>
                         </div>
                        
                         <div class="form-group">
