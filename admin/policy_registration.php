@@ -102,6 +102,7 @@ $num_rows =mysqli_num_rows($result);
     <meta name="author" content="">
 
     <title>Karoinsure Khata Admin</title>
+  
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -110,6 +111,7 @@ $num_rows =mysqli_num_rows($result);
         rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!-- Custom styles for this template-->
+    <link href="css/custom_style.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -172,9 +174,54 @@ $num_rows =mysqli_num_rows($result);
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Upload File</label>
-                            <input type="file" name="file_name" class="form-control" id="exampleFormControlInput1" required>
+                            <input type="file" name="file_name" class="form-control" id="file_name" required onchange="previewImage();">
                         </div>
-                    
+                            <img id="preview">
+                            <!-- The Modal -->
+                            <div id="myModal" class="modal" style="overflow: auto;">
+                            <span class="close text-white">&times;</span>
+                            <img class="modal-content" id="img01">
+                            <div id="caption"></div>
+                            </div>
+                            <!-- End Modal -->
+
+                            <!-- Start JS for Modal -->
+                            <script>
+                            var modal = document.getElementById("myModal");
+                            var img = document.getElementById("preview");
+                            var modalImg = document.getElementById("img01");
+                            var captionText = document.getElementById("caption");
+                            img.onclick = function(){
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                            }
+                            var span = document.getElementsByClassName("close")[0];
+                            span.onclick = function() { 
+                            modal.style.display = "none";
+                            }
+                            </script>
+                            <!-- End JS for Modal -->
+                      
+                     <!-- Start JS for image preview -->       
+                    <script>
+                    function previewImage() {
+                        var file = document.getElementById("file_name").files;
+                        if (file.length > 0) {
+                            var fileReader = new FileReader();
+                
+                    fileReader.onload = function (event) {
+                        document.getElementById("preview").setAttribute("src", event.target.result);
+                        document.getElementById("preview").setAttribute("style", "height:200px;width:200px");
+                                
+                        };
+            
+                        fileReader.readAsDataURL(file[0]);
+                    }
+                }
+               </script>
+               <!-- End JS for image preview -->
+
                         <div class="form-group" id="product_type">
                             <label for="exampleFormControlSelect1">Select Product</label>
                             <select class="form-control" name="product_type" id="product_type_value">

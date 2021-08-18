@@ -59,6 +59,7 @@ if($result){
 
 	for($i=0;$i<$rowcount;$i++){
 	$email=$row[$i]['client_email'];
+	$insurance_number=$row[$i]['insurance_number'];
     $exp_date=$row[$i]['emi3_expected_date'];
 	$expire_date = strtotime($exp_date);
 	$diff_days = $today_date-$expire_date;
@@ -74,14 +75,15 @@ if($result){
 		$mail->Port = "587";
 		$mail->SMTPAuth = TRUE;
 		$mail->SMTPSecure = 'tls'; 
-		$mail->Username = "Your Email";
-		$mail->Password = "Your Password";
-		$mail->SetFrom("Email from you send email", "By Ravi");
+		$mail->Username = "raviyadav2017sln@gmail.com";
+		$mail->Password = "SultanpurCityYadavJi@228125_&$#";
+		$mail->SetFrom("raviyadav2017sln@gmail.com", "By Ravi");
 		$mail->AddAddress($email);
-		$mail->addReplyTo('');
+		$mail->addReplyTo('raviyadav2017sln@gmail.com');
+		$mail->addCC('raviyadav2017sln@gmail.com');
 		$mail->IsHTML(true);
 		$mail->Subject = " From Karoinsure";
-		$mail->Body     .= "<h1>Your Should fill your EMI3 before 7 days</h1><br/>"; 
+		$mail->Body     .= "<h1>Your Should fill your EMI3 of insurance having number &nbsp;&nbsp; <u>{$insurance_number}</u> &nbsp;&nbsp; before 7 days</h1><br/>"; 
 		$mail->Body     .= "Cantact Number:XXXXXXXXX<br/>";
 		$mail->Body     .= "Email Number: xyz@gmail.com<br/>";
 		

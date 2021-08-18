@@ -59,7 +59,7 @@ if(@$_SESSION['is_login']){
                   <div class="col-lg-12">
                   <?php 
                 if(isset($_SESSION['success'])){
-                    if (time() - $_SESSION['msg_start'] < 30){ 
+                    if (time() - $_SESSION['msg_start'] < 5){ 
                         echo $_SESSION['success']; 
                     }else{
                        unset($_SESSION['success']);
@@ -67,7 +67,7 @@ if(@$_SESSION['is_login']){
                 }
 
                 if(isset($_SESSION['error'])){
-                    if (time() - $_SESSION['msg_start'] < 30){ 
+                    if (time() - $_SESSION['msg_start'] < 5){ 
                         echo $_SESSION['error']; 
                     }else{
                        unset($_SESSION['error']);

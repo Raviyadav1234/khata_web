@@ -138,7 +138,24 @@ if(@$_SESSION['is_login']){
                                         <tr>
                                             <td><?php echo $row['client_id'];?></td>
                                             <td><?php echo $row['insurance_number'];?></td>
-                                            <td><img src="file_upload/<?php echo $row['image'];?>" class="h-200 w-200 img-thumbnail img-fluid"/></td>
+                                            <td>
+                                              <?php 
+                                              if(pathinfo($row['image'], PATHINFO_EXTENSION)=='pdf'){?>
+                                                <img src="file_upload/<?php echo $row['image'];?>" class="d-none"/>
+                                                <img src="img/pdf-icon.png" class="img-thumbnail img-fluid" height="50px" width="50px"/>
+
+                                            <?php }else{?>
+                                             <img src="file_upload/<?php echo $row['image'];?>" class="h-200 w-200 img-thumbnail img-fluid"/>
+                                          <?php  }
+                                              ?>
+                                            
+                                              <?php echo $row['image'];?>
+                                              <a type="button" href="file_upload/<?php echo $row['image'];?>" target="_blank" class="btn btn-primary">Preview</a>
+                                              
+                                              <p>Or</p>
+                                              <a type="button" href="pdf_download.php?file=file_upload/<?php echo $row['image'];?>" target="_ravi" class="btn btn-primary">Download</a>
+                                              
+                                          </td>
                                    
                                             <td><?php echo $row['category'];?></td>
                                             <td><?php echo $row['category_value'];?></td>

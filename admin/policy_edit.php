@@ -41,6 +41,7 @@ if(@$_SESSION['is_login']){
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <link href="css/custom_style.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
@@ -110,9 +111,35 @@ if(@$_SESSION['is_login']){
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Upload File</label>
                             <input type="file" name="file_name" class="form-control" id="exampleFormControlInput1" value="" />
-                            <img src="file_upload/<?php echo $row['image'];?>" class="h-25 w-25 img-thumbnail img-fluid">
+                            <img src="file_upload/<?php echo $row['image'];?>" class="h-25 w-25 img-thumbnail img-fluid" id="preview">
                             <span><?php echo $row['image'];?></span>
                         </div>
+
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal" style="overflow: auto;">
+                            <span class="close text-white">&times;</span>
+                            <img class="modal-content" id="img01">
+                            <div id="caption"></div>
+                            </div>
+                            <!-- End Modal -->
+
+                            <!-- Start JS for Modal -->
+                            <script>
+                            var modal = document.getElementById("myModal");
+                            var img = document.getElementById("preview");
+                            var modalImg = document.getElementById("img01");
+                            var captionText = document.getElementById("caption");
+                            img.onclick = function(){
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                            }
+                            var span = document.getElementsByClassName("close")[0];
+                            span.onclick = function() { 
+                            modal.style.display = "none";
+                            }
+                            </script>
+                            <!-- End JS for Modal -->
                    
                         <div class="form-group" id="product_type">
                             <label for="exampleFormControlSelect1">Select Product</label>
@@ -224,10 +251,7 @@ if(@$_SESSION['is_login']){
                             }
                             </script>
 
-                        <!-- <div class="form-group">
-                            <label for="exampleFormControlInput1">Input Credit/Debit Amount</label>
-                            <input type="text" name="credit_debit_amount" class="form-control" id="exampleFormControlInput1" placeholder="60000" required>
-                        </div> -->
+                       
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Enter Date</label>
