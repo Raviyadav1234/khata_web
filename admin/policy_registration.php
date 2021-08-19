@@ -115,6 +115,18 @@ $num_rows =mysqli_num_rows($result);
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+    <script>
+        function getExtension(path) {
+    var basename = path.split(/[\\/]/).pop(), 
+        pos = basename.lastIndexOf(".");      
+
+    if (basename === "" || pos < 1)            
+        return "";                             
+
+    return basename.slice(pos + 1);           
+}
+    </script>
+
 
 </head>
 
@@ -175,7 +187,23 @@ $num_rows =mysqli_num_rows($result);
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Upload File</label>
                             <input type="file" name="file_name" class="form-control" id="file_name" required onchange="previewImage();">
+                            <input type="button" value="Preview" onclick="PreviewPdf();" id="pdf_btn"/>
                         </div>
+                        <div style="clear:both">
+                        <iframe id="viewer" frameborder="0" scrolling="no" width="300" height="200" class="d-none"></iframe>
+                    </div>
+
+                      <script>
+                          function PreviewPdf() {
+                            pdffile=document.getElementById("file_name").files[0];
+                            pdffile_url=URL.createObjectURL(pdffile);
+                            $('#viewer').removeClass("d-none");
+                            $('#viewer').attr('src',pdffile_url);
+                            
+                           
+                        }
+                      </script>
+
                             <img id="preview">
                             <!-- The Modal -->
                             <div id="myModal" class="modal" style="overflow: auto;">
@@ -206,18 +234,37 @@ $num_rows =mysqli_num_rows($result);
                      <!-- Start JS for image preview -->       
                     <script>
                     function previewImage() {
+                       
                         var file = document.getElementById("file_name").files;
-                        if (file.length > 0) {
-                            var fileReader = new FileReader();
+                        var file_name = file[0]['name'];
+                        
+                       var extention= file_name.substr((file_name.lastIndexOf('.') + 1));
+                       //console.log(extention);
+                        if (file.length>0 && extention!=='pdf') {
+                       
+                        var fileReader = new FileReader();
                 
-                    fileReader.onload = function (event) {
-                        document.getElementById("preview").setAttribute("src", event.target.result);
-                        document.getElementById("preview").setAttribute("style", "height:200px;width:200px");
-                                
-                        };
-            
-                        fileReader.readAsDataURL(file[0]);
-                    }
+                fileReader.onload = function (event) {
+                    document.getElementById("preview").setAttribute("src", event.target.result);
+                    document.getElementById("preview").setAttribute("style", "height:200px;width:200px");
+                    document.getElementById("pdf_btn").style.display="none";
+                            
+                    };
+        
+                    fileReader.readAsDataURL(file[0]);
+                       
+                    } else if(file.length>0 && extention=='pdf'){
+                        var fileReader = new FileReader();
+                
+                        fileReader.onload = function (event) {
+                            document.getElementById("preview").style.display="none";
+                            document.getElementById("pdf_btn").style.display="block";
+                                    
+                            };
+                
+                            fileReader.readAsDataURL(file[0]);
+                            }
+                       
                 }
                </script>
                <!-- End JS for image preview -->
@@ -240,8 +287,11 @@ $num_rows =mysqli_num_rows($result);
                             <label for="exampleFormControlInput1">Model & Make</label>
                             <input type="text" name="vehicle_model" id="vehicle_model_input" class="form-control" id="exampleFormControlInput1" value="" placeholder="Honda City ivtec 2016">
                         </div>
-                        <label for="exampleFormControlInput1">Period of Insurance</label>
+                        
                     <div class="row">
+                  <div class="col-sm-12">
+                  <label for="exampleFormControlInput1">Period of Insurance</label>
+                  </div>
                     <div class="form-group col-md-5">
                 <input type="date" class="form-control" id="insurance_startdate" name="insurance_startdate">
               </div> <span> to </span>
@@ -361,22 +411,7 @@ $("#myform,#category").change(function(){
       $("#product_type").show();
       $("#vehicle_number").show();
       $("#vehicle_model").show();
-      // $("#fornext").after(`
-      //   <div class="form-group" id="firstfield">
-      //                     <label for="exampleFormControlSelect1">Select non motor</label>
-      //                     <select class="form-control" name="category_value" id="exampleFormControlSelect1">
-                          
-      //                     <option value="" selected disabled>Select Motor</option>
-      //                     <option value="car">Car</option>
-      //                     <option value="bike">Bike</option>
-      //                     <option value="truck">Truck</option>
-      //                     <option value="bus">Bus</option>
-      //                     <option value="van">Van</option>
-      //                     </select>
-      //                   </div>
-      //   `);
-    
-
+   
     } else if(value=='nonmotor') {
         $("#firstfield").hide();
         $("#product_type").hide();
@@ -397,7 +432,7 @@ $("#myform,#category").change(function(){
                         </div>
         `);
 
-                 // $("#product_type_value").val(null);
+                 
                 
 
          

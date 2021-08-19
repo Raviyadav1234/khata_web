@@ -46,7 +46,7 @@ if(@$_SESSION['is_login']){
 
 </head>
 
-<body id="page-top" onload="load()">
+<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -101,7 +101,6 @@ if(@$_SESSION['is_login']){
                           </select>
                         </div>
 
-
                    
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Insurance Policy Number</label>
@@ -110,10 +109,44 @@ if(@$_SESSION['is_login']){
 
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Upload File</label>
-                            <input type="file" name="file_name" class="form-control" id="exampleFormControlInput1" value="" />
-                            <img src="file_upload/<?php echo $row['image'];?>" class="h-25 w-25 img-thumbnail img-fluid" id="preview">
-                            <span><?php echo $row['image'];?></span>
+                            <input type="file" name="file_name" class="form-control" id="file_name" value="<?php echo $row['image'];?>" onchange="previewImage();" />
+                            <input type="button" value="Preview" onclick="PreviewPdfBtn();" id="preview_pdf_btn" class="d-none"/>
                         </div>
+
+                        <img src="file_upload/<?php echo $row['image'];?>" class="h-25 w-25 img-thumbnail img-fluid" id="preview">
+                            <span id="img_nm"><?php echo $row['image'];?></span>
+
+                            <a type="button" href="file_upload/<?php echo $row['image'];?>" target="_blank" class="btn btn-secondary w-25" value="Preview" onclick="PreviewPdf();" id="pdf_btn">Preview Pdf</a>
+
+                    <div style="clear:both">
+                        <iframe id="viewer" frameborder="0" scrolling="no" width="300" height="200" class="d-none"></iframe>
+                    </div>
+
+                      <script>
+                          function PreviewPdfBtn() {
+                            pdffile=document.getElementById("file_name").files[0];
+                            pdffile_url=URL.createObjectURL(pdffile);
+                            $('#viewer').removeClass("d-none");
+                            $('#viewer').attr('src',pdffile_url);  
+                           
+                        }
+                      </script>
+
+                  
+                    <!-- <script>
+                         window.onload = function PreviewPdf() {
+                            var file = document.getElementById("preview").getAttribute('src');
+                            var extention= file.substr((file.lastIndexOf('.') + 1));
+                            //console.log(extention);
+                            if(extention!=='pdf'){
+                               document.getElementById("pdf_btn").style.display="none"; 
+                            } else if(extention=='pdf'){
+                            document.getElementById("pdf_btn").style.display="block";
+                            document.getElementById("preview").style.display="none"; 
+                            }
+                      
+                        }
+                      </script> -->
 
                         <!-- The Modal -->
                         <div id="myModal" class="modal" style="overflow: auto;">
@@ -140,8 +173,51 @@ if(@$_SESSION['is_login']){
                             }
                             </script>
                             <!-- End JS for Modal -->
+
+                <!-- Start JS for image preview -->       
+                    <script>
+                    function previewImage() {
+                       
+                        var file = document.getElementById("file_name").files;
+                        var file_name = file[0]['name'];
+                        
+                       var extention= file_name.substr((file_name.lastIndexOf('.') + 1));
+                       //console.log(extention);
+                        if (file.length>0 && extention!=='pdf') {
+                       
+                        var fileReader = new FileReader();
+                
+                fileReader.onload = function (event) {
+                    document.getElementById("preview").setAttribute("src", event.target.result);
+                    document.getElementById("preview").setAttribute("style", "height:200px;width:200px");
+                    $('#preview_pdf_btn').addClass("d-none");
+                    document.getElementById("img_nm").style.display="none";
+                    document.getElementById("pdf_btn").style.display="none";
+                    $('#viewer').addClass("d-none");
+                            
+                    };
+        
+                    fileReader.readAsDataURL(file[0]);
+                       
+                    } else if(file.length>0 && extention=='pdf'){
+                        var fileReader = new FileReader();
+                
+                        fileReader.onload = function (event) {
+                            document.getElementById("preview").style.display="none";
+                            $('#preview_pdf_btn').removeClass("d-none");
+                            document.getElementById("img_nm").style.display="none";
+                            document.getElementById("pdf_btn").style.display="none";
+                                    
+                            };
+                
+                            fileReader.readAsDataURL(file[0]);
+                            }
+                       
+                }
+               </script>
+               <!-- End JS for image preview -->
                    
-                        <div class="form-group" id="product_type">
+                        <br><div class="form-group" id="product_type">
                             <label for="exampleFormControlSelect1">Select Product</label>
                             <select class="form-control" name="product_type" id="exampleFormControlSelect1">
                             <option value="<?php echo $row['product_type'];?>" 
@@ -289,10 +365,29 @@ if(@$_SESSION['is_login']){
             <!-- End of Main Content -->
 
  <?php require_once  'includes/footer.php';?>
+
+ <script>
+    $("#myform,#category").change(function(){
+    var value = $(this).val();
+    if(value=='motor'){
+      $("#product_type").show();
+      $("#vehicle_number").show();
+      $("#vehicle_model").show();
+   
+    } else if(value=='nonmotor') {
+        $("#firstfield").hide();
+        $("#product_type").hide();
+        $("#vehicle_number").hide();
+        $("#vehicle_model").hide();
+    
+
+    }
+});
+</script>
  
  <script>
 
-function load(){
+    window.onload =  function(){
     var select = document.getElementById('category');
     if(select.value =='motor'){
         
@@ -300,6 +395,8 @@ function load(){
       $("#product_type").show();
       $("#vehicle_number").show();
       $("#vehicle_model").show();
+
+
     } else if(select.value=='nonmotor') {
         $("#firstfield").hide();
         $("#product_type").hide();
@@ -321,58 +418,16 @@ function load(){
         `);
 
     }
+        var file = document.getElementById("preview").getAttribute('src');
+                            var extention= file.substr((file.lastIndexOf('.') + 1));
+                            //console.log(extention);
+                            if(extention!=='pdf'){
+                               document.getElementById("pdf_btn").style.display="none"; 
+                            } else if(extention=='pdf'){
+                            document.getElementById("pdf_btn").style.display="block";
+                            document.getElementById("preview").style.display="none"; 
+                            }
+
 }
-// $("#myform,#category").change(function(){
-//     var value = $(this).val();
-//     var product_type = document.getElementById("product_type");
-//     var vehicle_number = document.getElementById("vehicle_number");
-//     var vehicle_model = document.getElementById("vehicle_model");
-//     if(value=='motor'){
-//       $("#secondfield").hide();
-//       $("#product_type").show();
-//       $("#vehicle_number").show();
-//       $("#vehicle_model").show();
-//       // $("#fornext").after(`
-//       //   <div class="form-group" id="firstfield">
-//       //                     <label for="exampleFormControlSelect1">Select non motor</label>
-//       //                     <select class="form-control" name="category_value" id="exampleFormControlSelect1">
-                          
-//       //                     <option value="" selected disabled>Select Motor</option>
-//       //                     <option value="car">Car</option>
-//       //                     <option value="bike">Bike</option>
-//       //                     <option value="truck">Truck</option>
-//       //                     <option value="bus">Bus</option>
-//       //                     <option value="van">Van</option>
-//       //                     </select>
-//       //                   </div>
-//       //   `);
-    
-
-//     } else if(value=='nonmotor') {
-//         $("#firstfield").hide();
-//         $("#product_type").hide();
-//         $("#vehicle_number").hide();
-//         $("#vehicle_model").hide();
-//         $("#fornext").after(`
-//         <div class="form-group" id="secondfield">
-//                           <label for="exampleFormControlSelect1">Select non motor</label>
-//                           <select class="form-control" name="category_value" id="exampleFormControlSelect1">
-                          
-//                           <option value="" selected disabled>Select Non-Motor</option>
-//                           <option value="health">health</option>
-//                           <option value="life">life</option>
-//                           <option value="property">property</option>
-//                           <option value="travel">travel</option>
-//                           <option value="other">other</option>
-//                           </select>
-//                         </div>
-//         `);
-
-//                  // $("#product_type_value").val(null);
-                
-
-         
-
-//     }
-// });
 </script>
+
