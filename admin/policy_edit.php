@@ -82,7 +82,7 @@ if(@$_SESSION['is_login']){
                           <select class="form-control" name="category" id="category">
                             <option >Select Category</option>
                             
-                            <option value="<?php echo $row['category'];?>"
+                            <option value="motor"
                             <?php
                             if($category=="motor"){
                                 echo "selected";
@@ -90,7 +90,7 @@ if(@$_SESSION['is_login']){
                             }
                               ?> 
                             >motor</option>
-                            <option value="<?php echo $row['category'];?>"
+                            <option value="nonmotor"
                             <?php
                             if($category=="nonmotor"){
                                 echo "selected";
@@ -367,18 +367,33 @@ if(@$_SESSION['is_login']){
  <?php require_once  'includes/footer.php';?>
 
  <script>
-    $("#myform,#category").change(function(){
+    $("#category").change(function(){
     var value = $(this).val();
     if(value=='motor'){
+      $("#secondfield").hide();
       $("#product_type").show();
       $("#vehicle_number").show();
       $("#vehicle_model").show();
    
     } else if(value=='nonmotor') {
-        $("#firstfield").hide();
+       $("#firstfield").hide();
         $("#product_type").hide();
         $("#vehicle_number").hide();
         $("#vehicle_model").hide();
+        $("#fornext").after(`
+        <div class="form-group" id="secondfield">
+                          <label for="exampleFormControlSelect1">Select non motor</label>
+                          <select class="form-control" name="category_value" id="exampleFormControlSelect1">
+                          
+                          <option value="" selected disabled>Select Non-Motor</option>
+                          <option value="health">health</option>
+                          <option value="life">life</option>
+                          <option value="property">property</option>
+                          <option value="travel">travel</option>
+                          <option value="other">other</option>
+                          </select>
+                        </div>
+        `);
     
 
     }
