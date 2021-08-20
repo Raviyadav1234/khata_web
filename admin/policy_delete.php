@@ -17,8 +17,8 @@
       
     if($result){
       
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Updated Successfully </div>';
-  
+      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Deleted Successfully </div>';
+      echo "redirecting";
       header("Refresh:0; url={$base_url}/admin/dashboard.php");
     }
     

@@ -17,6 +17,7 @@ if(isset($_POST['update_client'])){
     $client_mobile = sanatise(@$_POST['client_mobile']);
 if($client_name=="" || $client_email=="" || $client_mobile==""){
   $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Fill All Fields </div>';
+    echo " Fill All Fields";
     header("Refresh:2; url={$base_url}/admin/client_edit.php");
 }else{
    $sql = "UPDATE users SET 
@@ -38,7 +39,7 @@ if($client_name=="" || $client_email=="" || $client_mobile==""){
       <span aria-hidden="true">&times;</span>
     </button>
   </div>';
-
+  echo "Updated Sucessfully";
     header("Refresh:0; url={$base_url}/admin/dashboard.php");
   }else{
 
@@ -48,7 +49,7 @@ if($client_name=="" || $client_email=="" || $client_mobile==""){
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
-      
+      echo "Unable to Update";
      header("Refresh:2; url={$base_url}/admin/client_edit.php");
   }
 }

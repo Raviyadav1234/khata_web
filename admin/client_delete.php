@@ -18,8 +18,8 @@
         $sql = "DELETE FROM users WHERE id = '{$client_id}';";
         $affected_rows=mysqli_query($conn,$sql);
        // echo $affected_rows;
-       $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Updated Successfully </div>';
-  
+       $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Policy Deleted Successfully </div>';
+      echo "redirecting";
       header("Refresh:0; url={$base_url}/admin/dashboard.php");
      }
     //echo mysqli_error($conn);

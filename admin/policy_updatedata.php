@@ -68,7 +68,7 @@ if(@$_SESSION['is_login']){
                <span aria-hidden="true">&times;</span>
              </button>
            </div>';
-            
+           echo "Updated Sucessfully";
             header("Refresh:0; url={$base_url}/admin/dashboard.php");
              }else{
              
@@ -78,6 +78,7 @@ if(@$_SESSION['is_login']){
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>';
+            echo "Unable to Update";
            header("Refresh:2; url={$base_url}/admin/policy_edit.php");
                }
      
@@ -121,7 +122,7 @@ if(@$_SESSION['is_login']){
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
-        
+      echo "Updated Sucessfully";
        header("Refresh:0; url={$base_url}/admin/dashboard.php");
        
       } else {
@@ -133,6 +134,7 @@ if(@$_SESSION['is_login']){
           <span aria-hidden="true">&times;</span>
         </button>
       </div>';
+      echo "Unable to Update";
         header("Refresh:2; url={$base_url}/admin/policy_edit.php");
         
       }
