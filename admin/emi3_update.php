@@ -23,39 +23,38 @@ if(isset($_POST['submit_btn'])){
 
     if(@$row['client_id']==$client_id && @$row['insurance_number']==$insurance_number){
 
-    //sql for check if EMI2 is already fill
-    $sql1 = "SELECT * FROM policy_data WHERE insurance_number='{$insurance_number}'";
-    $result1 = mysqli_query($conn,$sql1);
-    $row1 = mysqli_fetch_assoc($result1);
-    $value = @$row1['credit_debit_amount1'];
+    if($row['credit_debit_amount1']==0){
 
-   $sql2 = "UPDATE policy_data SET
-     insurance_number ='{$insurance_number}', 
-     credit_debit_amount2='{$credit_debit_amount2}',
-     entry_date2='{$entry_date2}',
-     payment_mode ='{$payment_mode}'
-     WHERE insurance_number='{$insurance_number}'
-     " ;
-
-   $result2 = mysqli_query($conn,$sql2);
-   $affected_row = mysqli_affected_rows($conn);
-
-   
-  if($affected_row>0){
- if($value>0){
-   $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> EMI3 Updated Successfully </div>';
- 
-   header("Refresh:2; url={$base_url}/admin/dashboard.php");
- }else{
-     $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Update EMI2 first</div>';
+    $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Update EMI2 first</div>';
     header("Refresh:2; url={$base_url}/admin/emi3_update.php");
+
+    }else{
+
+    $sql1 = "UPDATE policy_data SET
+    insurance_number ='{$insurance_number}', 
+    credit_debit_amount2='{$credit_debit_amount2}',
+    entry_date2='{$entry_date2}',
+    payment_mode ='{$payment_mode}'
+    WHERE insurance_number='{$insurance_number}'
+    " ;
+
+  $result1 = mysqli_query($conn,$sql1);
+  $affected_row = mysqli_affected_rows($conn);
+
+    if($affected_row>0){
+ 
+        $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> EMI3 Updated Successfully </div>';
+      
+        header("Refresh:2; url={$base_url}/admin/dashboard.php");
+     
+        }else{
+         $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update EMI3 </div>';
+         header("Refresh:2; url={$base_url}/admin/emi3_update.php");
+        }
+
+     
  }
-
- 
-   } else {
-    $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update EMI3 </div>';
-    header("Refresh:2; url={$base_url}/admin/emi3_update.php");
-   }
+  
 
 
     }else{

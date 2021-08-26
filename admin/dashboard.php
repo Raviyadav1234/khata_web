@@ -178,9 +178,11 @@ if(@$_SESSION['is_login']){
  <?php require_once  'includes/footer.php';?>
  <link rel="stylesheet" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 <script src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
 <script>
-    $(document).ready( function () {
+    $(document).ready( function (){
     $('#dataTable').DataTable();
-} );
+});
 </script>
+                       
 

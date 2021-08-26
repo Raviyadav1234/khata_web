@@ -145,12 +145,12 @@ if(@$_SESSION['is_login']){
                                                 <img src="img/pdf-icon.png" class="img-thumbnail img-fluid" height="50px" width="50px"/>
 
                                             <?php }else{?>
-                                             <img src="file_upload/<?php echo $row['image'];?>" class="h-200 w-200 img-thumbnail img-fluid"/>
+                                             <img src="file_upload/<?php echo $row['image'];?>" class="img-thumbnail" style="height: 50px;width:100px;" />
                                           <?php  }
                                               ?>
                                             
                                               <?php echo $row['image'];?>
-                                              <a type="button" href="file_upload/<?php echo $row['image'];?>" target="_blank" class="btn btn-primary">Preview</a>
+                                              <br><a type="button" href="file_upload/<?php echo $row['image'];?>" target="_blank" class="btn btn-primary">Preview</a>
                                               
                                               <p>Or</p>
                                               <a type="button" href="pdf_download.php?file=file_upload/<?php echo $row['image'];?>" target="_ravi" class="btn btn-primary">Download</a>
@@ -207,7 +207,7 @@ if(@$_SESSION['is_login']){
                     
                  <td>                          
                 <a href="policy_edit.php?insurance_number=<?php echo $row['insurance_number']?>&category=<?php echo $row['category']?>&product_type=<?php echo $row['product_type']?>&category_value=<?php echo $row['category_value'];?>" value="Edit"><i class="fas fa-pen mr-5 text-success"></i></a>
-                <a href='policy_delete.php?insurance_number=<?php echo $row['insurance_number'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
+                <a href='policy_delete.php?insurance_number=<?php echo $row['insurance_number'];?>' value="Delete" onclick="return confirm('Are you sure to delete?')" id="del_policy"><i class="far fa-trash-alt ml-5 text-danger"></i></a>
                 </td>
                                             
                                         </tr> 
@@ -275,4 +275,5 @@ $result2 =mysqli_fetch_row($sum_total_amount);
     $('#dataTable').DataTable();
 } );
 </script>
+
 

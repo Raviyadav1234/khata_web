@@ -197,6 +197,7 @@ $num_rows =mysqli_num_rows($result);
                           function PreviewPdf() {
                             pdffile=document.getElementById("file_name").files[0];
                             pdffile_url=URL.createObjectURL(pdffile);
+                            $('#viewer').toggle();
                             $('#viewer').removeClass("d-none");
                             $('#viewer').attr('src',pdffile_url);
                             
@@ -248,6 +249,7 @@ $num_rows =mysqli_num_rows($result);
                     document.getElementById("preview").setAttribute("src", event.target.result);
                     document.getElementById("preview").setAttribute("style", "height:200px;width:200px");
                     document.getElementById("pdf_btn").style.display="none";
+                    $('#viewer').addClass("d-none");
                             
                     };
         

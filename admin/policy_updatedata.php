@@ -10,6 +10,10 @@ if(@$_SESSION['is_login']){
  header("Location:{$base_url}");
 }
 
+     $category = @$_GET['category'];
+     $category_value = @$_GET['category_value'];
+     $product_type = @$_GET['product_type'];
+     $insurance_number = @$_GET['insurance_number'];
 //this variable is for file uploadind
         $errors=array();
         $maxsize = 2097152;
@@ -51,13 +55,12 @@ if(@$_SESSION['is_login']){
       $file_type = $_FILES["file_name"]["type"];
       $folder = "file_upload/".$file_name;
       
-      
+       if(($file_size <= $maxsize) && ($file_size!== 0)){
 
-      $sql1 = "UPDATE policy_data SET category='{$category}', category_value='{$category_value}', product_type='{$product_type}', vehicle_number='{$vehicle_number}', vehicle_model='{$vehicle_model}', image='{$file_name}', insurance_startdate='{$insurance_startdate}', insurance_enddate='{$insurance_enddate}', total_amount='{$total_amount}', credit_debit_amount='{$credit_debit_amount}', entry_date='{$entry_date}', emi2_expected_date='{$emi2_expected_date}', payment_mode='{$payment_mode}', payment_reference_number='{$payment_reference_number}' WHERE insurance_number='{$insurance_number}'";
-      
-      if(($file_size <= $maxsize) && ($file_size!== 0)){
+       if((in_array($file_type, $acceptable)) && (!empty($file_type))){
+        
+         $sql1 = "UPDATE policy_data SET category='{$category}', category_value='{$category_value}', product_type='{$product_type}', vehicle_number='{$vehicle_number}', vehicle_model='{$vehicle_model}', image='{$file_name}', insurance_startdate='{$insurance_startdate}', insurance_enddate='{$insurance_enddate}', total_amount='{$total_amount}', credit_debit_amount='{$credit_debit_amount}', entry_date='{$entry_date}', emi2_expected_date='{$emi2_expected_date}', payment_mode='{$payment_mode}', payment_reference_number='{$payment_reference_number}' WHERE insurance_number='{$insurance_number}'";
 
-        if((in_array($file_type, $acceptable)) && (!empty($file_type))){
          $result1 = mysqli_query($conn,$sql1);
       
          if($result1){
@@ -68,9 +71,9 @@ if(@$_SESSION['is_login']){
                <span aria-hidden="true">&times;</span>
              </button>
            </div>';
-           echo "Updated Sucessfully";
+            echo "Updated Sucessfully";
             header("Refresh:0; url={$base_url}/admin/dashboard.php");
-             }else{
+          }else{
              
               $_SESSION['msg_start'] = time();
               $_SESSION["error"]='<div class="alert alert-danger alert-dismissible fade show" role="alert"> Unable to Update
@@ -79,21 +82,23 @@ if(@$_SESSION['is_login']){
               </button>
             </div>';
             echo "Unable to Update";
-           header("Refresh:2; url={$base_url}/admin/policy_edit.php");
-               }
+            header("Refresh:0; url={$base_url}/admin/policy_edit.php?insurance_number={$insurance_number}&category={$category}&product_type={$product_type}&category_value={$category_value}");
+          }
      
       }else{
          $error_2='Only JPEG,JPG,PDF,PNG files are accepted';
          echo '<script>alert("'.$error_2.'")</script>';
+         header("Refresh:0; url={$base_url}/admin/policy_edit.php?insurance_number={$insurance_number}&category={$category}&product_type={$product_type}&category_value={$category_value}");
       }
      
      }else{
          $error_1='File Size should be 2MB or less than 2MB';
         echo '<script>alert("'.$error_1.'")</script>';
+        header("Refresh:0; url={$base_url}/admin/policy_edit.php?insurance_number={$insurance_number}&category={$category}&product_type={$product_type}&category_value={$category_value}");
      }
 
 
-      } else{
+      }else{
 
         $category = sanatise(@$_POST['category']);
         $category_value = sanatise(@$_POST['category_value']);
@@ -111,8 +116,9 @@ if(@$_SESSION['is_login']){
         $emi2_expected_date = sanatise($_POST['emi2_expected_date']);
         $payment_mode = sanatise($_POST['payment_mode']);
         $payment_reference_number = sanatise($_POST['payment_reference_number']);
-      
+
       $sql2 = "UPDATE policy_data SET category='{$category}', category_value='{$category_value}', product_type='{$product_type}', vehicle_number='{$vehicle_number}', vehicle_model='{$vehicle_model}',  insurance_startdate='{$insurance_startdate}', insurance_enddate='{$insurance_enddate}', total_amount='{$total_amount}', credit_debit_amount='{$credit_debit_amount}', entry_date='{$entry_date}', emi2_expected_date='{$emi2_expected_date}', payment_mode='{$payment_mode}', payment_reference_number='{$payment_reference_number}' WHERE insurance_number='{$insurance_number}'";
+
       $result2 = mysqli_query($conn,$sql2);
 
       if($result2){
@@ -135,16 +141,14 @@ if(@$_SESSION['is_login']){
         </button>
       </div>';
       echo "Unable to Update";
-        header("Refresh:2; url={$base_url}/admin/policy_edit.php");
+      header("Refresh:0; url={$base_url}/admin/policy_edit.php?insurance_number={$insurance_number}&category={$category}&product_type={$product_type}&category_value={$category_value}");
         
       }
 
 
       }
 
-      
- 
-   }
+}
 
 
 

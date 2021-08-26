@@ -10,6 +10,7 @@ if(@$_SESSION['is_login']){
 }
 
      $category = @$_GET['category'];
+     $category_value = @$_GET['category_value'];
      $product_type = @$_GET['product_type'];
      $insurance_number = @$_GET['insurance_number'];
      $sql = "SELECT * FROM policy_data  WHERE insurance_number= '{$insurance_number}' ";
@@ -126,28 +127,13 @@ if(@$_SESSION['is_login']){
                           function PreviewPdfBtn() {
                             pdffile=document.getElementById("file_name").files[0];
                             pdffile_url=URL.createObjectURL(pdffile);
+                            $('#viewer').toggle();
                             $('#viewer').removeClass("d-none");
-                            $('#viewer').attr('src',pdffile_url);  
-                           
+                            $('#viewer').attr('src',pdffile_url);     
                         }
                       </script>
 
                   
-                    <!-- <script>
-                         window.onload = function PreviewPdf() {
-                            var file = document.getElementById("preview").getAttribute('src');
-                            var extention= file.substr((file.lastIndexOf('.') + 1));
-                            //console.log(extention);
-                            if(extention!=='pdf'){
-                               document.getElementById("pdf_btn").style.display="none"; 
-                            } else if(extention=='pdf'){
-                            document.getElementById("pdf_btn").style.display="block";
-                            document.getElementById("preview").style.display="none"; 
-                            }
-                      
-                        }
-                      </script> -->
-
                         <!-- The Modal -->
                         <div id="myModal" class="modal" style="overflow: auto;">
                             <span class="close text-white">&times;</span>

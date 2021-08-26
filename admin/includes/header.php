@@ -82,13 +82,13 @@
                             <div class="dropdown-item noti-title">
                                 <h5 class="m-0">
                                     <span class="float-right">
-                                        <a href="notification_delete.php" class="text-dark">
+                                        <a href="notification_delete.php" class="text-dark" id="noti_delete" type="button">
                                             <small>Clear All</small>
                                         </a>
                                     </span>Notification
                                 </h5>
                             </div>
-
+                           
                             
 
                             <div style="overflow: auto;height:250px;width:300px;">
@@ -243,3 +243,4 @@
 
                 </nav>
                 <!-- End of Topbar -->
+                

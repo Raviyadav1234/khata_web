@@ -9,6 +9,7 @@ if(@$_SESSION['is_login']){
     header("Location:{$base_url}");
 }
 
+  $id = @$_GET['id'];
 //Start client update code here
 if(isset($_POST['update_client'])){
     $id = sanatise(@$_POST['id']);
@@ -16,9 +17,11 @@ if(isset($_POST['update_client'])){
     $client_email = sanatise(@$_POST['client_email']);
     $client_mobile = sanatise(@$_POST['client_mobile']);
 if($client_name=="" || $client_email=="" || $client_mobile==""){
-  $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Fill All Fields </div>';
-    echo " Fill All Fields";
-    header("Refresh:2; url={$base_url}/admin/client_edit.php");
+    $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Fill All Fields </div>';
+    $error_1='Fill All Fields';
+    echo '<script>alert("'.$error_1.'")</script>';
+    //echo " Fill All Fields";
+    header("Refresh:0; url={$base_url}/admin/client_edit.php?id={$id}");
 }else{
    $sql = "UPDATE users SET 
         users.client_name='{$client_name}',
@@ -50,7 +53,7 @@ if($client_name=="" || $client_email=="" || $client_mobile==""){
         </button>
       </div>';
       echo "Unable to Update";
-     header("Refresh:2; url={$base_url}/admin/client_edit.php");
+      header("Refresh:0; url={$base_url}/admin/client_edit.php?id={$id}");
   }
 }
 

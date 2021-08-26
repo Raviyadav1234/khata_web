@@ -13,5 +13,6 @@ $sql .= "TRUNCATE table emi2_notification;";
 $sql .= "TRUNCATE table emi3_notification";
 $result = mysqli_multi_query($conn,$sql);
 if($result){
+    
     header("Location:{$base_url}/admin/dashboard.php");  
 }
